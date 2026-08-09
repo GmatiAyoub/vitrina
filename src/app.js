@@ -17,6 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', service: 'vitrina-backend' });
 });
+app.use('/uploads', express.static(require('path').join(__dirname, '..', 'uploads')));
+
 
 app.use('/api', routes);
 

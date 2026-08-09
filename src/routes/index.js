@@ -1,14 +1,12 @@
 const express = require('express');
 const authRoutes = require('./authRoutes');
+const commerceRoutes = require('./commerceRoutes');
+const produitRoutes = require('./produitRoutes');
 
 const router = express.Router();
 
 router.use('/auth', authRoutes);
-
-// Les routes des Sprints suivants seront branchées ici :
-// router.use('/commerces', commerceRoutes);
-// router.use('/produits', produitRoutes);
-// router.use('/favoris', favoriRoutes);
-// router.use('/admin', adminRoutes);
+router.use('/commerces', commerceRoutes);
+router.use('/produits', produitRoutes);
 
 module.exports = router;
