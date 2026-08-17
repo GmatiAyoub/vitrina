@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const trimBody = require('./middlewares/trimBody');
 require('dotenv').config();
 
 const routes = require('./routes');
@@ -13,6 +14,7 @@ app.use(cors({ origin: process.env.CLIENT_URL || '*' }));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(trimBody); // nettoie req.body pour les requêtes JSON (ex: /auth)
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', service: 'vitrina-backend' });
