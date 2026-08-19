@@ -5,6 +5,7 @@ const {
   getMonCommerce,
   updateMonCommerce,
 } = require('../controllers/commerceController');
+const { getFicheCommerce } = require('../controllers/commercePublicController');
 const { handleValidation } = require('../middlewares/validate');
 const { authenticate, authorize } = require('../middlewares/auth');
 const upload = require('../middlewares/upload');
@@ -24,7 +25,7 @@ router.post(
   authenticate,
   authorize('commercant'),
   upload.single('photo'),
-  trimBody, // req.body n'existe qu'après multer sur les routes form-data
+  trimBody,
   reglesCommerce,
   handleValidation,
   creerCommerce
@@ -40,5 +41,9 @@ router.put(
   trimBody,
   updateMonCommerce
 );
+
+// Route PUBLIQUE — doit être déclarée après "/me" pour qu'Express
+// ne confonde pas "me" avec un :id.
+router.get('/:id', getFicheCommerce);
 
 module.exports = router;
