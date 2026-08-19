@@ -16,17 +16,19 @@ async function tenterGeocodage(query) {
   }
 }
 
-/**
- * Géocode une adresse. Essaie l'adresse précise d'abord, puis se replie
- * sur "Mornag, Tunisie" seul si l'adresse exacte n'est pas trouvée
- * (le MVP cible exclusivement Mornag, donc un repli sur la ville reste pertinent).
- */
 async function geocoderAdresse(adresse) {
   const precis = await tenterGeocodage(`${adresse}, Mornag, Tunisie`);
   if (precis) return precis;
-
   console.warn(`Adresse précise non trouvée ("${adresse}"), repli sur Mornag, Tunisie.`);
   return tenterGeocodage('Mornag, Tunisie');
 }
 
-module.exports = { geocoderAdresse };
+/**
+ * Géocode une "zone" saisie librement par un client lors d'une recherche
+ * (ex: "Mornag", "Mornag Centre"). Utilisé par le Sprint 2.
+ */
+async function geocoderZone(zone) {
+  return tenterGeocodage(`${zone}, Tunisie`);
+}
+
+module.exports = { geocoderAdresse, geocoderZone, tenterGeocodage };
